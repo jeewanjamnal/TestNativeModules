@@ -1,16 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { Alert, Button, StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
-  useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import NativeBatteryModule from './specs/NativeBatteryModule';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -24,13 +17,34 @@ function App() {
 }
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+  async function loginWithBiometrics() {
+
+    try {
+
+      const available =
+        await NativeBatteryModule.getBatteryLevel();
+
+      Alert.alert(
+          'alert',
+          available.toString()
+        );
+
+    } catch (error) {
+
+      Alert.alert(
+        'Error',
+        String(error)
+      );
+
+    }
+
+  }
 
   return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
+      <Button
+        title="Authenticate"
+        onPress={loginWithBiometrics}
       />
     </View>
   );
@@ -39,6 +53,8 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

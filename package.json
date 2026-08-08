@@ -38,5 +38,18 @@
   },
   "engines": {
     "node": ">= 22.11.0"
+  },
+  "codegenConfig": {
+    "name": "BatteryModuleSpec",
+    "type": "modules",
+    "jsSrcsDir": "specs",
+    "android": {
+      "javaPackageName": "com.batterymodule"
+    },
+    "ios": {
+      "modulesProvider": {
+        "BatteryModule": "RCTBatteryModule"
+      }
+    }
   }
 }
